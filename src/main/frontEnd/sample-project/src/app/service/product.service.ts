@@ -25,8 +25,8 @@ export class ProductService {
         return this.http.put<Product>(`${this.apiServerUrl}/products`, product)
     }
 
-    public deleteProducts(employeeId: number) : void {
-        this.http.delete<Product>(`${this.apiServerUrl}/products/${employeeId}`)
+    public deleteProducts(employeeId: number) {
+        return this.http.delete<Product>(`${this.apiServerUrl}/products/${employeeId}`)
     }
 
     public sampleProducts(sampleSize: number) : Observable<Product[]> {

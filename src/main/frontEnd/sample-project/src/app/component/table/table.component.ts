@@ -9,9 +9,12 @@ import { ProductService } from 'src/app/service/product.service';
   styleUrls: ['./table.component.css']
 })
 export class TableComponent implements OnInit {
+  
   public displayedColumns: string[] = ['#', 'Title', 'Description', 'Product Type', 'Price', 'isAvailable', 'isOutdated', "Action"];
 
   public products : Product[];
+
+  public samplingSize : number = 0;
   constructor (private productService: ProductService){
     this.products = []
   }; 
@@ -30,5 +33,18 @@ export class TableComponent implements OnInit {
     );
   }
 
+  public deleteData(product: Product): void {
+    console.log(product);
+    this.productService.deleteProducts(product.id).subscribe(
+      (response ) => {
+        alert("Success");
+        this.getProducts();
+
+      }, 
+      (error: HttpErrorResponse) => {
+          alert(error.message)
+        }
+      );
+  }
 
 }
