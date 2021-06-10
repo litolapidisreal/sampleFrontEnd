@@ -17,7 +17,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title" id="exampleModalLabel">Add Product Service</h1>
+        <h1 class="modal-title" id="exampleModalLabel">Add New Product</h1>
         <button
           type="button"
           class="close"
@@ -27,44 +27,63 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <!--  -->
       <div class="modal-body">
-        <form #productForm="ngForm">
-          <!-- (ngSubmit)="onSubmit(productForm)">  -->
+        <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
           {{ productForm.value | json }}
+
           <div class="col">
             <label for="title">Title</label>
             <input
               type="text"
               class="form-control"
               placeholder="Title"
-              name="title"
-              required
-              ngModel
+              formControlName="title"
             />
-            <div class="invalid-feedback">Please enter valid title.</div>
+            <div
+              *ngIf="
+                productForm.get('title')?.errors &&
+                productForm.get('title')?.dirty
+              "
+              class="error"
+            >
+              Please enter valid title.
+            </div>
           </div>
           <div class="col">
-            <label for="title">Description</label>
+            <label for="description">Description</label>
             <input
               type="text"
               class="form-control"
               placeholder="Description"
-              name="description"
-              required
-              ngModel
+              formControlName="description"
             />
-            <div class="invalid-feedback">Please enter valid Description.</div>
+            <div
+              *ngIf="
+                productForm.get('description')?.errors &&
+                productForm.get('description')?.dirty
+              "
+              class="error"
+            >
+              Please enter valid Description.
+            </div>
           </div>
           <div class="col">
             <label for="productType">Product Type</label>
-            <select class="form-control" name="productType" ngModel required>
+            <select class="form-control" formControlName="productType">
               <option>Raw Material</option>
               <option>Technology</option>
               <option>Clothing</option>
               <option>Home and LifeStyle</option>
             </select>
-            <div class="invalid-feedback">Please select Product type.</div>
+            <div
+              *ngIf="
+                productForm.get('productType')?.errors &&
+                productForm.get('productType')?.dirty
+              "
+              class="error"
+            >
+              Please select Product type.
+            </div>
           </div>
           <div class="col">
             <label for="price">Price</label>
@@ -72,34 +91,67 @@
               type="number"
               class="form-control"
               placeholder="0.00"
-              required
-              ngModel
+              formControlName="price"
             />
-            <div class="invalid-feedback">Please input valid price.</div>
+            <div
+              *ngIf="
+                productForm.get('price')?.errors &&
+                productForm.get('price')?.dirty
+              "
+              class="error"
+            >
+              Please input valid price.
+            </div>
           </div>
-          <div class="col" ngModelGroup="convertForBackEnd">
-            <label for="isAvailable">isAvailable?</label>
-            <select class="form-control" name="available" ngModel required>
-              <option selected>True</option>
-              <option value="1">False</option>
+          <div class="col">
+            <label for="available">isAvailable?</label>
+            <select class="form-control" formControlName="available">
+              <option value="true">True</option>
+              <option value="false">False</option>
             </select>
-            <div class="invalid-feedback">Please select value.</div>
+            <div
+              *ngIf="
+                productForm.get('available')?.errors &&
+                productForm.get('available')?.dirty
+              "
+              class="error"
+            >
+              Please select value.
+            </div>
           </div>
-          <div class="col" ngModelGroup="convertForBackEnd">
-            <label for="isAvailable">isOutdated?</label>
-            <select class="form-control" name="outdate" ngModel>
-              <option selected>False</option>
-              <option value="1">True</option>
+          <div class="col">
+            <label for="outdated">isOutdated?</label>
+            <select class="form-control" formControlName="outdated">
+              <option value="false">False</option>
+              <option value="true">True</option>
             </select>
-            <div class="invalid-feedback">Please select value.</div>
+            <div
+              *ngIf="
+                productForm.get('outdated')?.errors &&
+                productForm.get('outdated')?.dirty
+              "
+              class="error"
+            >
+              Please select value.
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="!productForm.valid"
+            >
+              Confirm
+            </button>
           </div>
         </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-          Close
-        </button>
-        <button type="button" class="btn btn-primary">Confirm</button>
       </div>
     </div>
   </div>

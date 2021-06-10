@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/service/product.service';
 
@@ -9,19 +10,41 @@ import { ProductService } from 'src/app/service/product.service';
   styleUrls: ['./table.component.css']
 })
 export class TableComponent implements OnInit {
-  
+
   public displayedColumns: string[] = ['#', 'Title', 'Description', 'Product Type', 'Price', 'isAvailable', 'isOutdated', "Action"];
 
   public products : Product[];
-
+  public updateProduct : Product;
+  public updateForm: FormGroup;
+  public idValue: number = 0;
   public samplingSize : number = 0;
-  constructor (private productService: ProductService){
+  constructor (private productService: ProductService, private fb: FormBuilder){
     this.products = []
+    this.updateProduct = {
+      id: 0,
+      title: '',
+      productType: '',
+      description: '',
+      price: 0.0,
+      available: true,
+      outdated: false,
+    };
+    this.updateForm = fb.group({
+      id: [''],
+      title: ['', [Validators.required, Validators.minLength(10)]],
+      description: ['', [Validators.required, Validators.minLength(25)]],
+      productType: ['', Validators.required],
+      price: ['', Validators.required],
+      available: ['', Validators.required],
+      outdated: ['',Validators.required],
+    });
   }; 
   
   ngOnInit () {
     this.getProducts();
+
   }
+
   public getProducts(): void {
     this.productService.getProducts().subscribe(
     (response : Product[]) => {
@@ -47,4 +70,19 @@ export class TableComponent implements OnInit {
       );
   }
 
+  public passProduct(product: Product){
+    this.updateForm.patchValue({
+      id: product.id,
+      title: product.title,
+      productType: product.productType,
+      outdated: product.outdated,
+      description: product.description,
+      available: product.available,
+      price: product.price,
+
+    })
+    this.idValue = product.id;
+    console.log(this.updateForm.value);
+
+  }
 }

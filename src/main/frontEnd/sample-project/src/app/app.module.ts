@@ -9,13 +9,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InitializerComponent } from './component/initializer/initializer.component';
 import { AddValueComponent } from './component/add-value/add-value.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UpdValueComponent } from './component/upd-value/upd-value.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TableComponent,
     InitializerComponent,
-    AddValueComponent
+    AddValueComponent,
+    UpdValueComponent
   ],
   imports: [
     BrowserModule,

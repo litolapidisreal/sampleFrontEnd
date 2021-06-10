@@ -1,0 +1,142 @@
+<div class="modal-dialog" role="document2">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title" id="exampleModalLabel">
+        Updating Record#{{ idValue }}
+      </h1>
+      <button
+        type="button"
+        class="close"
+        data-dismiss="modal"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+        <div hidden class="col">
+          <label for="id">id</label>
+          <input
+            class="form-control"
+            placeholder="idValue"
+            formControlName="id"
+          />
+        </div>
+        <div class="col">
+          <label for="title">Title</label>
+          <input
+            class="form-control"
+            placeholder="Title"
+            formControlName="title"
+          />
+          <div
+            *ngIf="
+              updateForm.get('title')?.errors && updateForm.get('title')?.dirty
+            "
+            class="error"
+          >
+            Please enter valid title.
+          </div>
+        </div>
+        <div class="col">
+          <label for="description">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Description"
+            formControlName="description"
+          />
+          <div
+            *ngIf="
+              updateForm.get('description')?.errors &&
+              updateForm.get('description')?.dirty
+            "
+            class="error"
+          >
+            Please enter valid Description.
+          </div>
+        </div>
+        <div class="col">
+          <label for="productType">Product Type</label>
+          <select class="form-control" formControlName="productType">
+            <option value="Raw Materials">Raw Materials</option>
+            <option value="Technology">Technology</option>
+            <option value="Clothing">Clothing</option>
+            <option value="Home and LifeStyle">Home and LifeStyle</option>
+          </select>
+          <div
+            *ngIf="
+              updateForm.get('productType')?.errors &&
+              updateForm.get('productType')?.dirty
+            "
+            class="error"
+          >
+            Please select Product type.
+          </div>
+        </div>
+        <div class="col">
+          <label for="price">Price</label>
+          <input
+            type="number"
+            class="form-control"
+            placeholder="0.00"
+            formControlName="price"
+          />
+          <div
+            *ngIf="
+              updateForm.get('price')?.errors && updateForm.get('price')?.dirty
+            "
+            class="error"
+          >
+            Please input valid price.
+          </div>
+        </div>
+        <div class="col">
+          <label for="available">isAvailable?</label>
+          <select class="form-control" formControlName="available">
+            <option value="true">True</option>
+            <option value="false">False</option>
+          </select>
+          <div
+            *ngIf="
+              updateForm.get('available')?.errors &&
+              updateForm.get('available')?.dirty
+            "
+            class="error"
+          >
+            Please select value.
+          </div>
+        </div>
+        <div class="col">
+          <label for="outdated">isOutdated?</label>
+          <select class="form-control" formControlName="outdated">
+            <option value="false">False</option>
+            <option value="true">True</option>
+          </select>
+          <div
+            *ngIf="
+              updateForm.get('outdated')?.errors &&
+              updateForm.get('outdated')?.dirty
+            "
+            class="error"
+          >
+            Please select value.
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="!updateForm.valid"
+          >
+            Confirm
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -48,5 +48,6 @@ export class InitializerComponent implements OnInit {
         alert(error.message);
       }
     );
+    window.location.reload();
   }
 }

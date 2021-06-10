@@ -26,7 +26,7 @@ public class DataSamplerServiceImpl implements DataSamplerService {
             sample.setDescription("Description for test data " + i);
             sample.setPrice(rd.nextDouble()*10000);
             sample.setTitle("TESTDATA_" + i);
-            sample.setProductType("Materials");
+            sample.setProductType("Raw Materials");
             sample.setAvailable(rd.nextBoolean());
             sample.setOutdated(false);
             productList.add(sample);
