@@ -10,6 +10,7 @@ import { InitializerComponent } from './component/initializer/initializer.compon
 import { AddValueComponent } from './component/add-value/add-value.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UpdValueComponent } from './component/upd-value/upd-value.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { UpdValueComponent } from './component/upd-value/upd-value.component';
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AppRoutingModule
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]
