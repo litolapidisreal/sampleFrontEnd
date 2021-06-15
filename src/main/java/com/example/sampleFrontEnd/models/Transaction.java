@@ -14,7 +14,7 @@ public class Transaction implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String userId;
-    private String productId;
+    private Long productId;
     private Long qnty;
     private boolean isSale;
     private boolean isShip;
@@ -43,11 +43,11 @@ public class Transaction implements Serializable {
         this.userId = userId;
     }
 
-    public String getProductId() {
+    public Long getProductId() {
         return productId;
     }
 
-    public void setProductId(String productId) {
+    public void setProductId(Long productId) {
         this.productId = productId;
     }
 

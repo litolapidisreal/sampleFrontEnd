@@ -1,6 +1,5 @@
 package com.example.sampleFrontEnd.models;
 
-import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -33,17 +32,6 @@ public class Product implements Serializable {
     @Column(name = "isOutdated")
     private Boolean isOutdated;
 
-    public Product(Long id, String title, String productType,
-                   String description, Double price, Boolean isAvailable,
-                   Boolean isOutdated) {
-        this.id = id;
-        this.title = title;
-        this.productType = productType;
-        this.description = description;
-        this.price = price;
-        this.isAvailable = isAvailable;
-        this.isOutdated = isOutdated;
-    }
     public Product(){
         this.id = id;
         this.title = title;

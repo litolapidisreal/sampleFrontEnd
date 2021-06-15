@@ -18,15 +18,13 @@ public class Address implements Serializable {
     private String  municipality;
     private String  province;
     private String  zipcode;
-    private String  others;
 
-    public Address(String street, String subdivision, String municipality, String province, String zipcode, String others) {
+    public Address(String street, String subdivision, String municipality, String province, String zipcode) {
         this.street = street;
         this.subdivision = subdivision;
         this.municipality = municipality;
         this.province = province;
         this.zipcode = zipcode;
-        this.others = others;
     }
 
     public Long getId() {
@@ -79,11 +77,4 @@ public class Address implements Serializable {
         this.zipcode = zipcode;
     }
 
-    public String getOthers() {
-        return others;
-    }
-
-    public void setOthers(String others) {
-        this.others = others;
-    }
 }

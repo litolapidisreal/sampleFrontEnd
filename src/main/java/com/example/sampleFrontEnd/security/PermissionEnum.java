@@ -7,7 +7,12 @@ public enum PermissionEnum {
     PRODUCT_DELETE("product:delete"),
     TRANSACTION_WRITE("transaction:write"),
     TRANSACTION_READ("transaction:read"),
-    TRANSACTION_UPDATE("transaction:update");
+    TRANSACTION_UPDATE("transaction:update"),
+    TRANSACTION_DELETE("transaction:delete");
+
+    public String getPermission() {
+        return permission;
+    }
 
     private final String permission;
 

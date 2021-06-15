@@ -6,7 +6,6 @@ import com.example.sampleFrontEnd.service.ProductQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.GeneratedValue;
 import java.util.List;
 import java.util.Optional;
 
