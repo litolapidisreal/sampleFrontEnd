@@ -1,5 +1,7 @@
 package com.example.sampleFrontEnd.security;
 
+import com.example.sampleFrontEnd.jwt.JwtFilterRequest;
+import com.example.sampleFrontEnd.jwt.JwtSecurityCheck;
 import com.example.sampleFrontEnd.service.impl.UserLoginService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +12,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.concurrent.TimeUnit;
@@ -30,57 +33,27 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         this.userLoginService = userLoginService;
     }
 
-    /**
-     * FOR WEB SECURITY: Basic Authentication
-     * Needs to login to pass request via "Header"
-     * DOWNSIDE: No Logout scheme
-     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //CSRF - gives you ability to access PUT POST DELETE functions
         http
                 .csrf().disable() //-> TOKEN Creation
                 //.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and() // TODO: Creates a token that cannot be taken by FE
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().addFilter(new JwtSecurityCheck(authenticationManager()))
+                .addFilterAfter(new JwtFilterRequest(),JwtSecurityCheck.class )
 
                 .authorizeRequests()
+
                 //ANT MATCHERS FOR MAKING SOME PAGES TO BE ABLE TO  LOAD WITHOUT LOGGIN IN
-                .antMatchers("/","index","/css/*","/js/*").permitAll()
-                /**
-                 * Role based AUTHENTICATION
-                 * NOTE: WITHOUT HttpMethod -> Assumed as "get"
-                 */
+                .antMatchers("/","index","/css/*","/js/*", "/h2-ui/**").permitAll()
                 .antMatchers("/api/products", "/api/products/*").hasAnyRole(STUDENT.name())
                 .antMatchers("/api/sampler/*", "/api/products", "/api/products/*").hasAnyRole(ADMIN.name())
-                /**
-                 * Permission Based Authentication
-                 */
                 .antMatchers(HttpMethod.POST,"/api/transactions**").hasAuthority(TRANSACTION_WRITE.getPermission())
                 .antMatchers(HttpMethod.DELETE,"/api/transactions").hasAuthority(TRANSACTION_DELETE.getPermission())
                 .antMatchers(HttpMethod.GET, "/api/transactionsSampler/**").hasAuthority(TRANSACTION_UPDATE.getPermission())
                 .anyRequest()
-                .authenticated()
-                .and()
-                /**FORM BASED LOGIN AUTHENTICATION
-                 *
-                 */
-                .formLogin()
-                /**
-                 * Setting a login page
-                 */
-                .loginPage("/login").permitAll()
-                /**
-                 * default first page after login
-                 */
-                .defaultSuccessUrl("/hello", true)
-                /**
-                 * FOR REMEMBER ME functionality
-                 * TODO Upto two weeks
-                 */
-                .and().rememberMe()
-        .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(32)).key("ANYVALUEISHERE")
-        .and().logout().logoutUrl("/logout").invalidateHttpSession(true).deleteCookies("JSESSIONID","remember-me");
-        ;
-
+                .authenticated();
     }
 
 

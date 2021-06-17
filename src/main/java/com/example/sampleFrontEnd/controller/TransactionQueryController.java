@@ -34,6 +34,7 @@ public class TransactionQueryController {
             if (transactions.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
+            System.out.println("IM HERE");
 
             return new ResponseEntity<>(transactions, HttpStatus.OK);
         } catch (Exception e) {
@@ -55,12 +56,14 @@ public class TransactionQueryController {
 
     @GetMapping("/transactionsSampler/{id}")
     public ResponseEntity<List<Transaction>> createSampleData(@PathVariable("id") Integer id) {
+        System.out.println("IM HERE");
         System.out.println(dataSamplerService.createDataTransaction(id));
         return new ResponseEntity<>(transactionQueryService.findAll(), HttpStatus.OK);
     }
 
     @PostMapping("/transactions")
     public ResponseEntity<Transaction> createTransaction(@RequestBody Transaction transaction) {
+        System.out.println("IM HERE");
 
         try {
             Boolean _tutorial = transactionUpdateService.save(transaction);
