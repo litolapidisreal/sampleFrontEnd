@@ -26,8 +26,7 @@ dependencies {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 	testImplementation 'io.projectreactor:reactor-test'
-    // https://mvnrepository.com/artifact/com.google.guava/guava
-    implementation group: 'com.google.guava', name: 'guava', version: '11.0.2'
+//    implementation group: 'com.google.guava', name: 'guava', version: '11.0.2'
 
 }
 

@@ -11,6 +11,9 @@ import { AddValueComponent } from './component/add-value/add-value.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UpdValueComponent } from './component/upd-value/upd-value.component';
 import { AppRoutingModule } from './app-routing.module';
+import { MainComponent } from './webpage/main/main.component';
+import { LoginComponent } from './webpage/login/login.component';
+import { NewUserComponent } from './webpage/new-user/new-user.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,10 @@ import { AppRoutingModule } from './app-routing.module';
     TableComponent,
     InitializerComponent,
     AddValueComponent,
-    UpdValueComponent
+    UpdValueComponent,
+    MainComponent,
+    LoginComponent,
+    NewUserComponent
   ],
   imports: [
     BrowserModule,
