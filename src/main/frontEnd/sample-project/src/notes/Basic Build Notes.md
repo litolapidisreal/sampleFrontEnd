@@ -2,6 +2,9 @@
 **Download Latest version of Angular**
 
     ng update @angular/cli
+POWERSHELL Bypass Security ONLY for Signed and Trusted Sources
+    
+    Set-ExecutionPolicy -Scope "CurrentUser" -ExecutionPolicy "RemoteSigned"
 Build Latest Version of Project
 
     ng build
