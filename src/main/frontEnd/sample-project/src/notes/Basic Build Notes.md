@@ -20,7 +20,7 @@ Create Routing
 Create Custom Pipe
 
     ng generate pipe nameOfPipe
-# Building a Program
+# Building a Program AND Changing Folder name
 #### 1. npm run install
 #### 2. Change value package.json
 ##### LINE 2: name: "{name-of-folder}"; 
