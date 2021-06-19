@@ -1,0 +1,39 @@
+<div>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col" *ngFor="let column of displayedColumns">
+            {{ column }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- <tr *ngFor="let produck of products ;let indexOfelement=index;" >
+          <th scope="row">{{ produck.id }}</th>
+          <td>{{ produck.title }}</td>
+          <td>{{ produck.productType }}</td>
+          <td>{{ produck.description }}</td>
+          <td>{{ produck.price | number : '1.2-2'}}</td>
+          <td>{{ true == produck.available ? "Yes" : "No" }}</td>
+          <td>{{ true == produck.outdated ? "Yes" : "No" }}</td>
+          <td>
+            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalInput1" (click) = "passProduct(produck)"> Update </button>
+            <div class="modal fade" id="modalInput1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+              <upd-value [updateForm]="updateForm" [idValue] = "idValue"></upd-value>
+            </div>
+            
+            <button
+              type="button"
+              class="btn btn-warning btn-sm"
+              (click)="deleteData(produck)"
+            >
+              Delete
+            </button>
+          </td>
+        </tr> -->
+      </tbody>
+    </table>
+    <!-- <app-add-value></app-add-value>
+    <app-initializer (sampleSizeEvent)="products = $event"></app-initializer> -->
+  </div>
+  
