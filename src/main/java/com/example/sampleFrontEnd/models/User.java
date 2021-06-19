@@ -28,6 +28,7 @@ public class User implements UserDetails, Serializable {
     private String  password;
     private String  username;
     private String  gender;
+    private String userType;
     private Date birthDate;
     private Long mobileNo;
     private Long addressId;

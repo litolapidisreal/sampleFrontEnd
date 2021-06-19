@@ -1,4 +1,4 @@
-package com.example.sampleFrontEnd.security;
+package com.example.sampleFrontEnd.enums;
 
 public enum PermissionEnum {
     PRODUCT_WRITE("product:write"),
