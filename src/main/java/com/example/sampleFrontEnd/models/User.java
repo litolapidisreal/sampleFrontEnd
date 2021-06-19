@@ -1,6 +1,5 @@
 package com.example.sampleFrontEnd.models;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,10 +24,21 @@ public class User implements UserDetails, Serializable {
     private String middleName;
     private String  lastName;
     private String  email;
-    private String  password;
-    private String  username;
+    private String  passWord;
+    private String  userName;
     private String  gender;
     private String userType;
+
+    @Override
+    public String getPassword() {
+        return this.passWord;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.userName;
+    }
+
     private Date birthDate;
     private Long mobileNo;
     private Long addressId;
