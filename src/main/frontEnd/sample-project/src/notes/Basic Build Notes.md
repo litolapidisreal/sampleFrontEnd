@@ -14,8 +14,9 @@ Create component
 Create Routing
 
     ng g module app-routing 
+Create Custom Pipe
 
-
+    ng generate pipe nameOfPipe
 # Building a Program
 #### 1. npm run install
 #### 2. Change value package.json
