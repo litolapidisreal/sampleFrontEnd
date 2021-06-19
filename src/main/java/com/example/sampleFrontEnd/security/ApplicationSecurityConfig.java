@@ -1,70 +1,55 @@
 package com.example.sampleFrontEnd.security;
 
+import com.example.sampleFrontEnd.service.UserLoginService;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
-//    private final PasswordEncoder passwordEncoder;
-//
-//    public ApplicationSecurityConfig(PasswordEncoder passwordEncoder) {
-//        this.passwordEncoder = passwordEncoder;
-//    }
+    private final BCryptPasswordEncoder passwordEncoder;
+    private final UserLoginService userLoginService;
 
-    /**
-     * FOR WEB SECURITY: Basic Authentication
-     * Needs to login to pass request via "Header"
-     * DOWNSIDE: No Logout scheme
-     */
+    public ApplicationSecurityConfig(BCryptPasswordEncoder passwordEncoder, UserLoginService userLoginService) {
+        this.passwordEncoder = passwordEncoder;
+        this.userLoginService = userLoginService;
+    }
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable().authorizeRequests().anyRequest().permitAll();
-        http.headers().frameOptions().disable();
+        http.cors().and().csrf().disable().authorizeRequests()
+                .antMatchers("/register/signUp").permitAll()
+                .anyRequest().authenticated().and().formLogin();
+        //H2 Console Security Bypass Setting
+        http.headers().frameOptions().sameOrigin()
+                .cacheControl();;
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        super.configure(auth);
+        auth.authenticationProvider(daoAuthenticationProvider());
     }
+
 
 /**For DB Based Encryption for Login
      *NOTE: Needs seperate passwordEncode
      * password encryption
      */
 
-//    @Override
-//    @Bean
-//    protected UserDetailsService userDetailsService() {
-//        UserDetails userDetails = User.builder()
-//                .username("DONDON")
-//                .password(passwordEncoder.encode("MONTALIBANO"))
-//                .roles(STUDENT.name())
-//                .build();
-//        UserDetails adminUser = User.builder()
-//                .username("linda")
-//                .password(passwordEncoder.encode("linda"))
-//                .roles(ADMIN.name())
-//                .build();
-//        UserDetails byRoleUser = User.builder()
-//                .username("anitalinda")
-//                .password(passwordEncoder.encode("linda"))
-//                .roles(CLERK.name())
-//                .build();
-//        /**Uses memory from Local Run Memory
-//         * Other types for UserDetailService
-//         * 1. CachingUserDetailsService
-//         * 2. InMemoryUserDetailsManager
-//         * 3. JdbcDaoImpl
-//         * 4. JdbcUserDetailsManager
-//         * 5. ReactiveUserDetailsServiceAdapter in WithUserDetailsSecurityContextFactory
-//         * 6. UserDetailsManager
-//         * 7. UserDetailsServiceDelegator in WebSecurityConfigurerAdapter
-//         */
-//        return new InMemoryUserDetailsManager(userDetails, adminUser);
-//    }
+    @Bean
+    public DaoAuthenticationProvider daoAuthenticationProvider(){
+        DaoAuthenticationProvider daoAuthenticationProvider =
+                new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
+        daoAuthenticationProvider.setUserDetailsService(userLoginService);
+        return daoAuthenticationProvider;
+    }
 }
