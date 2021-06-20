@@ -47,6 +47,7 @@ public class UserLoginService implements UserDetailsService {
         } else {
             userValue = userRepository.findByUserName(username);
         }
+        System.out.println(userValue);
         return userValue.orElseThrow(() -> new BadCredentialsException(MESSAGE));
     }
 }
