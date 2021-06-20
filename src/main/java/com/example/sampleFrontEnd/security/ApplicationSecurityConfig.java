@@ -2,9 +2,11 @@ package com.example.sampleFrontEnd.security;
 
 import com.example.sampleFrontEnd.jwt.JwtAuthenticationEntryPoint;
 import com.example.sampleFrontEnd.jwt.JwtFilterRequest;
+import com.example.sampleFrontEnd.jwt.JwtSecurityCheck;
 import com.example.sampleFrontEnd.service.UserLoginService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -45,18 +47,17 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/register/signUp","/authenticate, /login").permitAll()
+                .antMatchers("/register/signUp","/authenticate").permitAll()
+//                .antMatchers(HttpMethod.POST,)
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint);
 
-        http.addFilterBefore(jwtFilterRequest, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterAfter(jwtFilterRequest, JwtSecurityCheck.class);
 
-        //H2 Console Security Bypass Setting
-        http.headers().frameOptions().sameOrigin()
-                .cacheControl();;
+        http.headers().frameOptions().sameOrigin().cacheControl();;
     }
 
     /**

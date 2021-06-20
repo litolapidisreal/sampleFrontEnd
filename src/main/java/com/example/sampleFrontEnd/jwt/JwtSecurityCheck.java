@@ -4,6 +4,7 @@ import com.example.sampleFrontEnd.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import lombok.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Map;
+
+import static com.example.sampleFrontEnd.enums.StringConstant.*;
 
 public class JwtSecurityCheck extends UsernamePasswordAuthenticationFilter{
 
@@ -53,13 +56,12 @@ public class JwtSecurityCheck extends UsernamePasswordAuthenticationFilter{
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        String token = "CJfiorjoiwghorwehgbvsdaufwe8ywfgciowechnjklcjksdksdgvudsv";
         String jwtToken = Jwts.builder()
                 .setSubject(authResult.getName())
                 .claim("authorities", authResult.getAuthorities())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis()+360000L))
-                .signWith(Keys.hmacShaKeyFor(token.getBytes()))
+                .signWith(Keys.hmacShaKeyFor(TOKEN.getBytes()))
                 .compact();
         response.addHeader("Authorization", "Bearer " + jwtToken);
     }

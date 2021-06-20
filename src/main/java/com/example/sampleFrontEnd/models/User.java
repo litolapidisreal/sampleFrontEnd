@@ -12,6 +12,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 
+import static com.example.sampleFrontEnd.enums.UserEnum.findByAbbr;
+
 @Setter
 @NoArgsConstructor
 @Entity
@@ -55,7 +57,7 @@ public class User implements UserDetails, Serializable {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return findByAbbr(this.getUserType()).getGrantedAuthoritySet();
     }
 
     @Override

@@ -1,15 +1,20 @@
 package com.example.sampleFrontEnd.controller;
 
 import com.example.sampleFrontEnd.service.UserLoginService;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.Date;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import static com.example.sampleFrontEnd.enums.StringConstant.TOKEN;
 
 @RestController
 //@RequestMapping("/api/login")
@@ -18,30 +23,36 @@ import java.util.Map;
 public class LoginController {
     private final UserLoginService userLoginService;
     private final AuthenticationManager authenticationManager;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     public LoginController(final UserLoginService userLoginService,
                            final AuthenticationManager authenticationManager) {
         this.userLoginService = userLoginService;
         this.authenticationManager = authenticationManager;
     }
 
-    @GetMapping("/authenticate")
+    @PostMapping("/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody Map<String, String> authenticationRequest)
             throws Exception {
-        try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            authenticationRequest.get("username"),
-                            bCryptPasswordEncoder.encode(
-                                    authenticationRequest.get("password"))));
-        } catch (BadCredentialsException exception) {
-            throw new Exception("Incorrect username or password", exception);
-        }
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        authenticationRequest.get("username"),
+                        authenticationRequest.get("password")));
+        HttpHeaders responseHeaders = new HttpHeaders();
+        final String jwt =  Jwts.builder()
+                .setSubject(authentication.getName())
+                .claim("authorities", authentication.getAuthorities())
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis()+ TimeUnit.SECONDS.toMillis(30)))
+                .signWith(Keys.hmacShaKeyFor(TOKEN.getBytes()))
+                .compact();
+        responseHeaders.add("Authorization",
+                "Bearer " + jwt);
 
+        return ResponseEntity
+                .ok()
+                .headers(responseHeaders)
+                .body(authentication);
 
-//        final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
-//        final String jwt = jwtUtil.generateToken(userDetails);
-        return ResponseEntity.ok("{}");
 
     }
 }
