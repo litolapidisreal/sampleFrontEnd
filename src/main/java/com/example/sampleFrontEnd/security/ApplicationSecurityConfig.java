@@ -37,17 +37,11 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
     }
 
-
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        super.configure(web);
-    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/register/signUp","/authenticate").permitAll()
+                .antMatchers("/register/signUp","/authenticate", "/h2-ui/**").permitAll()
 //                .antMatchers(HttpMethod.POST,)
                 .anyRequest().authenticated()
                 .and()

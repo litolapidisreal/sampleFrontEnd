@@ -41,10 +41,12 @@ export class TableComponent implements OnInit {
   }; 
   
   ngOnInit () {
-    this.getProducts();
 
   }
-
+  ngAfterViewInit(){
+    this.getProducts();
+ }
+ 
   public getProducts(): void {
     this.productService.getProducts().subscribe(
     (response : Product[]) => {

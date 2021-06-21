@@ -14,6 +14,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { MainComponent } from './webpage/main/main.component';
 import { LoginComponent } from './webpage/login/login.component';
 import { NewUserComponent } from './webpage/new-user/new-user.component';
+import { NewUserFormComponent } from './component/new-user-form/new-user-form.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { NewUserComponent } from './webpage/new-user/new-user.component';
     UpdValueComponent,
     MainComponent,
     LoginComponent,
-    NewUserComponent
+    NewUserComponent,
+    NewUserFormComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +35,9 @@ import { NewUserComponent } from './webpage/new-user/new-user.component';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    NgbModule
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]

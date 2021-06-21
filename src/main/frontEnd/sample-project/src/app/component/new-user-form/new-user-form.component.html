@@ -1,0 +1,168 @@
+
+<body>
+    <!-- {{ userInfoForm.value | json }} -->
+
+    <div id="login-dp" class="row">
+
+        <form [formGroup]="userInfoForm">
+            <h1>Registration</h1>
+
+            <div class="justify-content-center">
+                <div class="col-md-4">
+                    <label for="inputFirstName">First Name</label>
+                    <input type="text" class="form-control" id="inputFirstName" formControlName="inputFirstName"
+                        placeholder="Jose">
+                </div>
+                <div class="col-md-4">
+                    <label for="inputMiddleName">Middle Name</label>
+                    <input type="text" class="form-control" id="inputMiddleName" formControlName="inputMiddleName"
+                        placeholder="Mari">
+                </div>
+                <div class="col-md-4">
+                    <label for="inputLastName">Last Name</label>
+                    <input type="text" class="form-control" id="inputLastName" formControlName="inputLastName"
+                        placeholder="Chan">
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-12">
+                    <label for="inputUserName">Username</label>
+                    <input type="text" class="form-control" id="inputUserName" formControlName="inputUserName"
+                        placeholder="Username">
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="col-md-12">
+                    <label for="inputEmail">Email</label>
+                    <input type="email" class="form-control" id="inputEmail" formControlName="inputEmail"
+                        placeholder="Email">
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="col-md-12">
+                    <label for="inputPassword">Password</label>
+                    <input type="password" class="form-control" id="inputPassword" formControlName="inputPassword"
+                        placeholder="Password">
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-3">
+                    <label for="inputGender">Gender</label>
+                    <select class="form-control" id="inputGender" formControlName="inputGender">
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Others ..</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="inputUserType">User Type</label>
+                    <select class="form-control" id="inputUserType" formControlName="inputUserType">
+                        <option>ADMIN</option>
+                        <option>CLERK</option>
+                        <option>STUDENT</option>
+                    </select>
+                </div>
+                <div class="col-md-5">
+                    <label for="inputMobile">Mobile No</label>
+                    <input type="string" class="form-control" id="inputMobile" formControlName="inputMobile"
+                        placeholder="(09)XX XXX XXXX">
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-4">
+                    <label for="inputMonth">Month</label>
+                    <select id="inputMonth" formControlName="inputMonth" class="form-control">
+                        <option selected>Choose...</option>
+                        <option>...</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="inputDay">Day</label>
+                    <select id="inputDay" formControlName="inputDay" class="form-control">
+                        <option selected>Choose...</option>
+                        <option>...</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="inputYear">Year</label>
+                    <select id="inputYear" formControlName="inputYear" class="form-control">
+                        <option selected>Choose...</option>
+                        <option>...</option>
+                    </select>
+                </div>
+
+                <div class="clearfix"></div>
+                <div class="col-md-12">
+                    <label for="inputAddress1">Street/Phase</label>
+                    <input type="text" class="form-control" id="inputAddress1" formControlName="inputAddress1"
+                        placeholder="1234 Main St">
+                </div>
+                <div class="col-md-12">
+                    <label for="inputAddress2">Subdivision/Barangay</label>
+                    <input type="text" class="form-control" id="inputAddress2" formControlName="inputAddress2"
+                        placeholder="My Subdivision, My Barangay">
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-4">
+                    <label for="inputCity">City</label>
+                    <input type="text" class="form-control" formControlName="inputCity" id="inputCity">
+                </div>
+                <div class="col-md-4">
+                    <label for="inputProvince">Province</label>
+                    <select id="inputProvince" formControlName="inputProvince" class="form-control">
+                        <option selected>Choose...</option>
+                        <option>...</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="inputZip">Zip</label>
+                    <input type="text" class="form-control" formControlName="inputZip" id="inputZip">
+                </div>
+                <div class="clearfix"></div>
+                <div class="form-check col-md-12">
+                    <input class="form-check-input float-right" type="checkbox" formControlName="gridCheck"
+                        id="gridCheck">
+                    <label class="form-check-label float-right" for="gridCheck">
+                        Is Home Address same with Company Address?
+                    </label>
+                </div>
+                <div class="clearfix"></div>
+                <div class="form-check col-md-1">
+                    <button type="submit" class="btn btn-primary float-right" [disabled]="!userInfoForm.valid">
+                        Confirm
+                    </button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</body>
+<!--
+        <div class="form-group">
+            <div class="col-md-3">
+                <label for="inputBusAddress1">Street/Phase</label>
+                <input type="text" class="form-control" id="inputBusAddress1" formControlName="inputBusAddress1"
+                    placeholder="1234 Main St">
+            </div>
+            <div class="col-md-3">
+                <label for="inputBusAddress2">Subdivision/Barangay</label>
+                <input type="text" class="form-control" id="inputBusAddress2" formControlName="inputBusAddress2"
+                    placeholder="My Subdivision">
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="form-group">
+            <div class="col-md-2">
+                <label for="inputBusCity">City</label>
+                <input type="text" class="form-control" formControlName="inputBusCity" id="inputBusCity">
+            </div>
+            <div class="col-md-2">
+                <label for="inputBusState">Province</label>
+                <select id="inputBusState" formControlName="inputBusState" class="form-control">
+                    <option selected>Choose...</option>
+                    <option>...</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label for="inputZip">Zip</label>
+                <input type="text" formControlName="inputBusZip" class="form-control" id="inputBusZip">
+            </div>
+        </div> -->

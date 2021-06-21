@@ -20,8 +20,6 @@ export class UpdValueComponent implements OnInit {
   product: Product
   @Input() updateForm: FormGroup;
   @Input() idValue: number = 0;
-
-
   constructor(private fb: FormBuilder, private productService: ProductService) {
     this.updateForm = fb.group({
       id: [''],

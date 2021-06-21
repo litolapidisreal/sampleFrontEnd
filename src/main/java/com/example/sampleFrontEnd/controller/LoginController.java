@@ -1,5 +1,6 @@
 package com.example.sampleFrontEnd.controller;
 
+import com.example.sampleFrontEnd.models.APIResponse;
 import com.example.sampleFrontEnd.service.UserLoginService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -30,9 +31,15 @@ public class LoginController {
         this.authenticationManager = authenticationManager;
     }
 
+    @PostMapping("/validate")
+    public ResponseEntity<?> createAuthenticationToken(){
+        return ResponseEntity.ok(new APIResponse("Success", "200"));
+    }
+
     @PostMapping("/authenticate")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody Map<String, String> authenticationRequest)
+    public ResponseEntity createAuthenticationToken(@RequestBody Map<String, String> authenticationRequest)
             throws Exception {
+        System.out.println("checking value");
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         authenticationRequest.get("username"),
@@ -42,17 +49,14 @@ public class LoginController {
                 .setSubject(authentication.getName())
                 .claim("authorities", authentication.getAuthorities())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis()+ TimeUnit.SECONDS.toMillis(30)))
+                .setExpiration(new Date(System.currentTimeMillis()+ TimeUnit.MINUTES.toMillis(10)))
                 .signWith(Keys.hmacShaKeyFor(TOKEN.getBytes()))
                 .compact();
         responseHeaders.add("Authorization",
                 "Bearer " + jwt);
-
+        System.out.println("checking value");
         return ResponseEntity
                 .ok()
-                .headers(responseHeaders)
-                .body(authentication);
-
-
+                .headers(responseHeaders).body(true);
     }
 }
