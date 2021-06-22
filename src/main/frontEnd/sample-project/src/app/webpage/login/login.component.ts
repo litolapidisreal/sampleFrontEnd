@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from 'src/app/service/login.service';
 import { environment } from 'src/environments/environment';
 import { Userlogin } from 'src/app/models/userlogin';
+import { AuthenticationModel } from 'src/app/models/authentication-model';
+
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 @Component({
@@ -38,12 +40,14 @@ export class LoginComponent implements OnInit {
     this.loginUser.username = this.loginForm.value.inputEmail;
     this.loginService.login(this.loginUser)
     .subscribe(
-      (response: Boolean) => {
-        console.log('response.valueOfAuthorization')
+      (response : AuthenticationModel)=> {
+        console.log(response.message)
         alert("Success");
+        window.location.replace(this.feServerUrl);
       }, 
       (error: HttpErrorResponse) => {
           alert(error.message)
+          this.loginForm.reset;
         }
       );
   }

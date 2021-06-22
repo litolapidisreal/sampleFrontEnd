@@ -39,7 +39,6 @@ public class LoginController {
     @PostMapping("/authenticate")
     public ResponseEntity createAuthenticationToken(@RequestBody Map<String, String> authenticationRequest)
             throws Exception {
-        System.out.println("checking value");
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         authenticationRequest.get("username"),
@@ -52,11 +51,8 @@ public class LoginController {
                 .setExpiration(new Date(System.currentTimeMillis()+ TimeUnit.MINUTES.toMillis(10)))
                 .signWith(Keys.hmacShaKeyFor(TOKEN.getBytes()))
                 .compact();
-        responseHeaders.add("Authorization",
-                "Bearer " + jwt);
-        System.out.println("checking value");
         return ResponseEntity
                 .ok()
-                .headers(responseHeaders).body(true);
+                .headers(responseHeaders).body(new APIResponse(jwt,"200:Success"));
     }
 }
