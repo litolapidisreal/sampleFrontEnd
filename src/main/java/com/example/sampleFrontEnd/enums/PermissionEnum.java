@@ -1,4 +1,4 @@
-package com.example.sampleFrontEnd.security;
+package com.example.sampleFrontEnd.enums;
 
 public enum PermissionEnum {
     PRODUCT_WRITE("product:write"),
@@ -13,5 +13,9 @@ public enum PermissionEnum {
 
     PermissionEnum(String permission) {
         this.permission = permission;
+    }
+
+    public String getPermission() {
+        return permission;
     }
 }

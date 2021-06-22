@@ -62,7 +62,6 @@ export class TableComponent implements OnInit {
       (response ) => {
         alert("Success");
         this.getProducts();
-
       }, 
       (error: HttpErrorResponse) => {
           alert(error.message)

@@ -1,66 +1,87 @@
 package com.example.sampleFrontEnd.security;
 
+import com.example.sampleFrontEnd.jwt.JwtAuthenticationEntryPoint;
+import com.example.sampleFrontEnd.jwt.JwtFilterRequest;
+import com.example.sampleFrontEnd.jwt.JwtSecurityCheck;
+import com.example.sampleFrontEnd.service.UserLoginService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
-//    private final PasswordEncoder passwordEncoder;
-//
-//    public ApplicationSecurityConfig(PasswordEncoder passwordEncoder) {
-//        this.passwordEncoder = passwordEncoder;
-//    }
+    private final BCryptPasswordEncoder passwordEncoder;
+    private final UserLoginService userLoginService;
+    private final JwtFilterRequest jwtFilterRequest;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
-    /**
-     * FOR WEB SECURITY: Basic Authentication
-     * Needs to login to pass request via "Header"
-     * DOWNSIDE: No Logout scheme
-     */
+    public ApplicationSecurityConfig(BCryptPasswordEncoder passwordEncoder,
+                                     UserLoginService userLoginService,
+                                     JwtFilterRequest jwtFilterRequest,
+                                     JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint) {
+        this.passwordEncoder = passwordEncoder;
+        this.userLoginService = userLoginService;
+        this.jwtFilterRequest = jwtFilterRequest;
+        this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable().authorizeRequests().anyRequest().permitAll();
-        http.headers().frameOptions().disable();
+        http.cors().and().csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/register/signUp","/authenticate", "/h2-ui/**").permitAll()
+//                .antMatchers(HttpMethod.POST,)
+                .anyRequest().authenticated()
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint);
+
+        http.addFilterAfter(jwtFilterRequest, JwtSecurityCheck.class);
+
+        http.headers().frameOptions().sameOrigin().cacheControl();;
+    }
+
+    /**
+     * for Access in Controller Level
+     * @return
+     * @throws Exception
+     */
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(daoAuthenticationProvider());
     }
 
 
-    /**For DB Based Encryption for Login
+/**For DB Based Encryption for Login
      *NOTE: Needs seperate passwordEncode
      * password encryption
      */
 
-//    @Override
-//    @Bean
-//    protected UserDetailsService userDetailsService() {
-//        UserDetails userDetails = User.builder()
-//                .username("DONDON")
-//                .password(passwordEncoder.encode("MONTALIBANO"))
-//                .roles(STUDENT.name())
-//                .build();
-//        UserDetails adminUser = User.builder()
-//                .username("linda")
-//                .password(passwordEncoder.encode("linda"))
-//                .roles(ADMIN.name())
-//                .build();
-//        UserDetails byRoleUser = User.builder()
-//                .username("anitalinda")
-//                .password(passwordEncoder.encode("linda"))
-//                .roles(CLERK.name())
-//                .build();
-//        /**Uses memory from Local Run Memory
-//         * Other types for UserDetailService
-//         * 1. CachingUserDetailsService
-//         * 2. InMemoryUserDetailsManager
-//         * 3. JdbcDaoImpl
-//         * 4. JdbcUserDetailsManager
-//         * 5. ReactiveUserDetailsServiceAdapter in WithUserDetailsSecurityContextFactory
-//         * 6. UserDetailsManager
-//         * 7. UserDetailsServiceDelegator in WebSecurityConfigurerAdapter
-//         */
-//        return new InMemoryUserDetailsManager(userDetails, adminUser);
-//    }
+    @Bean
+    public DaoAuthenticationProvider daoAuthenticationProvider(){
+        DaoAuthenticationProvider daoAuthenticationProvider =
+                new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
+        daoAuthenticationProvider.setUserDetailsService(userLoginService);
+        return daoAuthenticationProvider;
+    }
 }

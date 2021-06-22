@@ -1,29 +1,13 @@
-<button
-  type="button"
-  class="btn btn-primary btn-lg"
-  data-toggle="modal"
-  data-target="#modalInput2"
->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalInput2">
   Add
 </button>
-<div
-  class="modal fade"
-  id="modalInput2"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="false"
->
+<div class="modal fade" id="modalInput2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="false">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title" id="exampleModalLabel">Add New Product</h1>
-        <button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -33,37 +17,21 @@
 
           <div class="col">
             <label for="title">Title</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Title"
-              formControlName="title"
-            />
-            <div
-              *ngIf="
+            <input type="text" class="form-control" placeholder="Title" formControlName="title" />
+            <div *ngIf="
                 productForm.get('title')?.errors &&
                 productForm.get('title')?.dirty
-              "
-              class="error"
-            >
+              " class="error">
               Please enter valid title.
             </div>
           </div>
           <div class="col">
             <label for="description">Description</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Description"
-              formControlName="description"
-            />
-            <div
-              *ngIf="
+            <input type="text" class="form-control" placeholder="Description" formControlName="description" />
+            <div *ngIf="
                 productForm.get('description')?.errors &&
                 productForm.get('description')?.dirty
-              "
-              class="error"
-            >
+              " class="error">
               Please enter valid Description.
             </div>
           </div>
@@ -75,31 +43,20 @@
               <option>Clothing</option>
               <option>Home and LifeStyle</option>
             </select>
-            <div
-              *ngIf="
+            <div *ngIf="
                 productForm.get('productType')?.errors &&
                 productForm.get('productType')?.dirty
-              "
-              class="error"
-            >
+              " class="error">
               Please select Product type.
             </div>
           </div>
           <div class="col">
             <label for="price">Price</label>
-            <input
-              type="number"
-              class="form-control"
-              placeholder="0.00"
-              formControlName="price"
-            />
-            <div
-              *ngIf="
+            <input type="number" class="form-control" placeholder="0.00" formControlName="price" />
+            <div *ngIf="
                 productForm.get('price')?.errors &&
                 productForm.get('price')?.dirty
-              "
-              class="error"
-            >
+              " class="error">
               Please input valid price.
             </div>
           </div>
@@ -109,13 +66,10 @@
               <option value="true">True</option>
               <option value="false">False</option>
             </select>
-            <div
-              *ngIf="
+            <div *ngIf="
                 productForm.get('available')?.errors &&
                 productForm.get('available')?.dirty
-              "
-              class="error"
-            >
+              " class="error">
               Please select value.
             </div>
           </div>
@@ -125,29 +79,18 @@
               <option value="false">False</option>
               <option value="true">True</option>
             </select>
-            <div
-              *ngIf="
+            <div *ngIf="
                 productForm.get('outdated')?.errors &&
                 productForm.get('outdated')?.dirty
-              "
-              class="error"
-            >
+              " class="error">
               Please select value.
             </div>
           </div>
           <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-            >
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
               Close
             </button>
-            <button
-              type="submit"
-              class="btn btn-primary"
-              [disabled]="!productForm.valid"
-            >
+            <button type="submit" class="btn btn-primary" [disabled]="!productForm.valid">
               Confirm
             </button>
           </div>

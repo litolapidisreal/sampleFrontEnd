@@ -1,7 +1,6 @@
 package com.example.sampleFrontEnd.models;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import lombok.Getter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,13 +8,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 
-@Getter
+import static com.example.sampleFrontEnd.enums.UserEnum.findByAbbr;
+
 @Setter
 @NoArgsConstructor
 @Entity
+//@JsonIgnoreProperties({"enabled", "credentialsNonExpired",
+//        "accountNonLocked", "accountNonExpired" })
 public class User implements UserDetails, Serializable {
 
     @Id
@@ -25,23 +28,36 @@ public class User implements UserDetails, Serializable {
     private String middleName;
     private String  lastName;
     private String  email;
-    private String  password;
-    private String  username;
+    private String  passWord;
+    private String  userName;
     private String  gender;
+    private String userType;
     private Date birthDate;
-    private Long mobileNo;
+    private String mobileNo;
     private Long addressId;
     private Date dateCreated;
     private Date dateUpdated;
-    private Boolean isAccountNonExpired;
-    private Boolean isAccountNonLocked;
-    private Boolean isCredentialsNonExpired;
-    private Boolean isEnabled;
+    private Boolean isAccountNonExpired = true;
+    private Boolean isAccountNonLocked = true;
+    private Boolean isCredentialsNonExpired = true;
+    private Boolean isEnabled = true;
+
+
+
+    @Override
+    public String getPassword() {
+        return this.passWord;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.userName;
+    }
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return findByAbbr(this.getUserType()).getGrantedAuthoritySet();
     }
 
     @Override
@@ -62,5 +78,117 @@ public class User implements UserDetails, Serializable {
     @Override
     public boolean isEnabled() {
         return this.isEnabled;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+//
+//    public String getPassWord() {
+//        return passWord;
+//    }
+//
+    public void setPassWord(String passWord) {
+        this.passWord = passWord;
+    }
+//
+//    public String getUserName() {
+//        return userName;
+//    }
+//
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getMobileNo() {
+        return mobileNo;
+    }
+
+    public void setMobileNo(String mobileNo) {
+        this.mobileNo = mobileNo;
+    }
+
+    public Long getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(Long addressId) {
+        this.addressId = addressId;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public Date getDateUpdated() {
+        return dateUpdated;
+    }
+
+    public void setDateUpdated(Date dateUpdated) {
+        this.dateUpdated = dateUpdated;
     }
 }
