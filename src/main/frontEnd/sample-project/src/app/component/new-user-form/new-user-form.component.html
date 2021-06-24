@@ -1,7 +1,7 @@
 
 <body>
-    <!-- {{ userInfoForm.value | json }} -->
-
+    {{ userInfoForm.value | json }}
+    {{ newDate | json }}
     <div id="login-dp" class="row">
 
         <form [formGroup]="userInfoForm">
@@ -69,8 +69,18 @@
                 <div class="col-md-4">
                     <label for="inputMonth">Month</label>
                     <select id="inputMonth" formControlName="inputMonth" class="form-control">
-                        <option selected>Choose...</option>
-                        <option>...</option>
+                        <option>JAN</option>
+                        <option>FEB</option>
+                        <option>MAR</option>
+                        <option>APR</option>
+                        <option>MAY</option>
+                        <option>JUN</option>
+                        <option>JUL</option>
+                        <option>AUG</option>
+                        <option>SEP</option>
+                        <option>OCT</option>
+                        <option>NOV</option>
+                        <option>DEC</option>
                     </select>
                 </div>
                 <div class="col-md-4">
@@ -82,10 +92,8 @@
                 </div>
                 <div class="col-md-4">
                     <label for="inputYear">Year</label>
-                    <select id="inputYear" formControlName="inputYear" class="form-control">
-                        <option selected>Choose...</option>
-                        <option>...</option>
-                    </select>
+                        <input type="text" class="form-control" id="inputYear" formControlName="inputYear"
+                        placeholder="19XX">
                 </div>
 
                 <div class="clearfix"></div>

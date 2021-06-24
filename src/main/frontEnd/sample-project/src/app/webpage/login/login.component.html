@@ -18,7 +18,7 @@
                          <input type="password" class="form-control" id="inputPassword"  formControlName="inputPassword" placeholder="Password"
                               required>
                          <div class="help-block text-right"><a href="">Forget the password ?</a></div>
-                         <button (click)="authenticate()" class="btn btn-primary btn-block">Sign in</button>
+                         <button (click)="authenticate()" class="btn btn-primary btn-block" [disabled]="!loginForm.valid">Sign in</button>
                     </div>
                </form>
 
