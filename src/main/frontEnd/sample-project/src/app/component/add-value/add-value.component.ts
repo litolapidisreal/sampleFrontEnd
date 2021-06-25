@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/service/product.service';
@@ -12,9 +12,12 @@ import { ProductService } from 'src/app/service/product.service';
 export class AddValueComponent implements OnInit {
   product: Product;
   productForm: FormGroup;
+  @Input() tokenValue: string;
+
 
   constructor(private fb: FormBuilder,
     private productService: ProductService) {
+    this.tokenValue = "";
     this.productForm = fb.group({
       title: ['',[Validators.required, Validators.minLength(10)]],
       description:  ['',[Validators.required, Validators.minLength(25)]],
@@ -46,7 +49,7 @@ export class AddValueComponent implements OnInit {
     this.product.available = this.productForm.value.available;
     this.product.price = this.productForm.value.price;
     console.log(this.product);
-    this.productService.addProducts(this.product).subscribe(
+    this.productService.addProducts(this.product, this.tokenValue).subscribe(
       (response) => {
         alert("Success");
       }, 

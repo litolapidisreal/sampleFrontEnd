@@ -11,15 +11,15 @@
       <tr *ngFor="let produck of products ;let indexOfelement=index;" >
         <th scope="row">{{ produck.id }}</th>
         <td>{{ produck.title }}</td>
-        <td>{{ produck.productType }}</td>
         <td>{{ produck.description }}</td>
+        <td>{{ produck.productType }}</td>
         <td>{{ produck.price }}</td>
         <td>{{ true == produck.available ? "Yes" : "No" }}</td>
         <td>{{ true == produck.outdated ? "Yes" : "No" }}</td>
         <td>
           <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalInput1" (click) = "passProduct(produck)"> Update </button>
           <div class="modal fade" id="modalInput1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
-            <upd-value [updateForm]="updateForm" [idValue] = "idValue"></upd-value>
+            <upd-value [updateForm]="updateForm" [idValue] = "idValue" [tokenValue] = "tokenValue"></upd-value>
           </div>
           
           <button
@@ -34,6 +34,6 @@
       <tr></tr>
     </tbody>
   </table>
-  <app-add-value></app-add-value>
-  <app-initializer (sampleSizeEvent)="products = $event"></app-initializer>
+  <app-add-value [tokenValue] = "tokenValue"></app-add-value>
+  <app-initializer (sampleSizeEvent)="products = $event" [tokenValue] = "tokenValue"></app-initializer>
 </div>

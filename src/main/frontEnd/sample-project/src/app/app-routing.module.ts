@@ -10,7 +10,7 @@ import { NewUserFormComponent } from './component/new-user-form/new-user-form.co
 
 const routes: Routes = [
   { path: '', component: AppComponent},
-  { path: 'home', component: MainComponent},
+  { path: 'home/:token', component: MainComponent},
   { path: 'login', component: LoginComponent},
   { path: 'signUp', component: NewUserComponent},
   { path: 'display', component: NewUserFormComponent}

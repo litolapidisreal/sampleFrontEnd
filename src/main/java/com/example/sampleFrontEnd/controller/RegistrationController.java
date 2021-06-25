@@ -20,7 +20,7 @@ public class RegistrationController {
         this.userLoginService = userLoginService;
     }
 
-    @GetMapping("/signUp")
+    @PostMapping("/signUp")
     public ResponseEntity<User> getTutorialById(@RequestBody User user) throws CredentialException {
         if (userLoginService.checkByUserUniqueness(user) &&
                 ObjectUtils.allNotNull(user.getFirstName(),user.getLastName(),

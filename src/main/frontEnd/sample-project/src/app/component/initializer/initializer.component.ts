@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  Input,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -20,6 +21,8 @@ export class InitializerComponent implements OnInit {
   public products: Product[];
   public sampleSize: number = 0;
   public showValue: string = '0 values to be added!';
+  @Input() tokenValue: string;
+
 
   public sampleSizeEvent = new EventEmitter<Product[]>();
   public click(value: string): void {
@@ -33,13 +36,14 @@ export class InitializerComponent implements OnInit {
   }
 
   constructor(private productService: ProductService) {
+    this.tokenValue = "";
     this.products = [];
   }
 
   ngOnInit() {}
 
   public getSampleProducts(sampleSize: number): void {
-    this.productService.sampleProducts(sampleSize).subscribe(
+    this.productService.sampleProducts(sampleSize, this.tokenValue).subscribe(
       (response: Product[]) => {
         this.products = response;
         console.log(response.length);

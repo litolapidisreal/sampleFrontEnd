@@ -1,5 +1,4 @@
 export interface NewUser {
-    id: number,
     firstName: string,
     middleName: string,
     lastName: string,
@@ -10,8 +9,5 @@ export interface NewUser {
     userType: string,
     birthDate: Date,
     mobileNo: string,
-    addressId: number,
-    dateCreated: Date,
-    dateUpdated: Date
-
+    addressId: number
 }

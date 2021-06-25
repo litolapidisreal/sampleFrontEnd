@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -17,11 +17,12 @@ export class LoginService {
     return this.http.post<AuthenticationModel>(`${this.apiServerUrl}authenticate`, userlogin)
   }
   public addUser(newUser: NewUser) {
-    return this.http.post(`${this.apiServerUrl}/addUser`, newUser)
+    return this.http.post(`${this.apiServerUrl}register/signUp`, newUser)
   }
 
-  public validate() {
-    return this.http.get(`${this.apiServerUrl}/validate`)
+  public validate(bearerToken:string) {
+    let headerValue = new HttpHeaders().set("Authorization", bearerToken);
+    return this.http.get(`${this.apiServerUrl}validate`,{headers: headerValue});
   }
 
 }

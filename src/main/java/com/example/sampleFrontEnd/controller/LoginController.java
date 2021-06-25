@@ -31,7 +31,7 @@ public class LoginController {
         this.authenticationManager = authenticationManager;
     }
 
-    @PostMapping("/validate")
+    @GetMapping("/validate")
     public ResponseEntity<?> createAuthenticationToken(){
         return ResponseEntity.ok(new APIResponse("Success", "200"));
     }

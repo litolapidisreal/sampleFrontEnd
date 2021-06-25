@@ -4,6 +4,8 @@ import com.example.sampleFrontEnd.models.Product;
 import com.example.sampleFrontEnd.service.DataSamplerService;
 import com.example.sampleFrontEnd.service.ProductQueryService;
 import com.example.sampleFrontEnd.service.ProductUpdateService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -65,8 +67,8 @@ public class ProductQueryController {
     }
 
     @PostMapping("/products")
-    public ResponseEntity<Product> createTutorial(@RequestBody Product product) {
-
+    public ResponseEntity<Product> createTutorial(@RequestBody Product product) throws JsonProcessingException {
+        System.out.println(new ObjectMapper().writeValueAsString(product));
         try {
             Boolean _tutorial = productUpdateService.save(product);
             return new ResponseEntity<>(product, HttpStatus.CREATED);
@@ -76,7 +78,8 @@ public class ProductQueryController {
     }
 
     @PutMapping("/products")
-    public ResponseEntity<Boolean> updateTutorial(@RequestBody Product product) {
+    public ResponseEntity<Boolean> updateTutorial(@RequestBody Product product) throws JsonProcessingException {
+        System.out.println(new ObjectMapper().writeValueAsString(product));
 
         Optional<Product> tutorialData = productQueryService.findById(product.getId());
 

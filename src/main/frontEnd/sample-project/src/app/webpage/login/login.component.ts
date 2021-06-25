@@ -4,8 +4,8 @@ import { LoginService } from 'src/app/service/login.service';
 import { environment } from 'src/environments/environment';
 import { Userlogin } from 'src/app/models/userlogin';
 import { AuthenticationModel } from 'src/app/models/authentication-model';
-
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { Router} from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -13,11 +13,12 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  feServerUrl = environment.feDevUrl + '/signUp';
+  feServerUrl = environment.feDevUrl + '/home';
   loginForm: FormGroup;
   loginUser: Userlogin;
   constructor(private fb: FormBuilder,
-    private loginService: LoginService) {
+    private loginService: LoginService,
+    private router: Router) {
     this.loginForm = fb.group({
       inputEmail: ['', [Validators.required, Validators.minLength(5)]],
       inputPassword: ['', [Validators.required, Validators.minLength(8)]]
@@ -42,12 +43,23 @@ export class LoginComponent implements OnInit {
     .subscribe(
       (response : AuthenticationModel)=> {
         console.log(response.message)
-        alert("Success");
-        window.location.replace(this.feServerUrl);
+        this.loginService.validate('Bearer '+ response.message).subscribe(
+          (responsive)=> {
+            alert("Success");
+            this.router.navigate(["/home", window.btoa(response.message)]);
+          },
+          (error: HttpErrorResponse) =>{
+            alert(error.message)
+            this.loginForm.reset;  
+            window.location.reload();
+
+          }
+        )
       }, 
       (error: HttpErrorResponse) => {
           alert(error.message)
-          this.loginForm.reset;
+          window.location.reload();
+
         }
       );
   }

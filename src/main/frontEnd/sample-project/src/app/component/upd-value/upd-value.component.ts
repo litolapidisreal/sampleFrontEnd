@@ -20,7 +20,10 @@ export class UpdValueComponent implements OnInit {
   product: Product
   @Input() updateForm: FormGroup;
   @Input() idValue: number = 0;
+  @Input() tokenValue: string;
+
   constructor(private fb: FormBuilder, private productService: ProductService) {
+    this.tokenValue = '';
     this.updateForm = fb.group({
       id: [''],
       title: ['', [Validators.required, Validators.minLength(10)]],
@@ -60,9 +63,10 @@ export class UpdValueComponent implements OnInit {
     this.product.available = this.updateForm.value.available;
 
     console.log(this.product);
-    this.productService.updateProducts(this.product).subscribe(
+    this.productService.updateProducts(this.product, this.tokenValue).subscribe(
       (response) => {
         alert("Success");
+        window.location.reload();
       },
       (error: HttpErrorResponse) => {
           alert(error.message)
