@@ -11,8 +11,25 @@ import { environment } from 'src/environments/environment';
   templateUrl: './new-user-form.component.html',
   styleUrls: ['./new-user-form.component.css']
 })
-export class NewUserFormComponent implements OnInit,OnChanges {
+export class NewUserFormComponent implements OnInit{
   private feDevUrl = environment.feDevUrl;
+  public opts = [
+    { key: "", value: Array(0).fill(0).map((x,i)=>i+1) },
+    { key: "JAN", value: Array(31).fill(0).map((x,i)=>i+1) },
+    { key: "FEB", value: Array(28).fill(0).map((x,i)=>i+1) },
+    { key: "MAR", value: Array(31).fill(0).map((x,i)=>i+1) },
+    { key: "APR", value: Array(30).fill(0).map((x,i)=>i+1) },
+    { key: "MAY", value: Array(31).fill(0).map((x,i)=>i+1) },
+    { key: "JUN", value: Array(31).fill(0).map((x,i)=>i+1) },
+    { key: "JUL", value: Array(30).fill(0).map((x,i)=>i+1) },
+    { key: "AUG", value: Array(31).fill(0).map((x,i)=>i+1) },
+    { key: "SEP", value: Array(30).fill(0).map((x,i)=>i+1) },
+    { key: "OCT", value: Array(31).fill(0).map((x,i)=>i+1) },
+    { key: "NOV", value: Array(30).fill(0).map((x,i)=>i+1) },
+    { key: "DEC", value: Array(31).fill(0).map((x,i)=>i+1) }
+
+  ];
+
   userInfoForm: FormGroup;
   newUser: NewUser;
   newDate: Date;
@@ -72,15 +89,11 @@ export class NewUserFormComponent implements OnInit,OnChanges {
   ngOnInit(): void {
     this.newDate = new Date(Date.parse(this.dateString));
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    this.numberDays = Array(21).fill(0).map((x,i)=>i+1);
-    this.newDate = new Date(Date.parse(
-      this.userInfoForm.value.inputYear + '-' +
-      this.userInfoForm.value.inputMonth + '-' +
-      this.userInfoForm.value.inputDay));
+
+  public createArray(valueNum: number){
+    return this.numberDays = Array(valueNum).fill(0).map((x,i)=>i+1);
 
   }
-
   createUser() {
     console.log(this.userInfoForm.value);
     this.newUser.firstName = this.userInfoForm.value.inputFirstName;

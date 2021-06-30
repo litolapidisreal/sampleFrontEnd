@@ -1,4 +1,3 @@
-
 <body>
     {{ userInfoForm.value | json }}
     {{ newDate | json }}
@@ -12,11 +11,11 @@
                     <label for="inputFirstName">First Name</label>
                     <input type="text" class="form-control" id="inputFirstName" formControlName="inputFirstName"
                         placeholder="Jose">
-                        <div *ngIf="userInfoForm.get('inputFirstName')?.errors
+                    <div *ngIf="userInfoForm.get('inputFirstName')?.errors
                         && userInfoForm.get('inputFirstName')?.dirty" class="error">
-                            * Please add value.
-                        </div>
-        
+                        * Please add value.
+                    </div>
+
                 </div>
                 <div class="col-md-4">
                     <label for="inputMiddleName">Middle Name</label>
@@ -27,25 +26,25 @@
                     <label for="inputLastName">Last Name</label>
                     <input type="text" class="form-control" id="inputLastName" formControlName="inputLastName"
                         placeholder="Chan">
-                        <div *ngIf="userInfoForm.get('inputLastName')?.errors
+                    <div *ngIf="userInfoForm.get('inputLastName')?.errors
                         && userInfoForm.get('inputLastName')?.dirty" class="error">
-                            * * Please add value.
-                        </div>
+                        * * Please add value.
                     </div>
-                
+                </div>
+
                 <div class="clearfix"></div>
                 <div class="col-md-12">
                     <label for="inputUserName">Username</label>
                     <input type="text" class="form-control" id="inputUserName" formControlName="inputUserName"
                         placeholder="Username">
-                        <div *ngIf="userInfoForm.get('inputUserName')?.errors?.minlength
+                    <div *ngIf="userInfoForm.get('inputUserName')?.errors?.minlength
                         && userInfoForm.get('inputUserName')?.dirty" class="error">
-                            * Please input more than 5 value.
-                        </div>
-                        <div *ngIf="userInfoForm.get('inputUserName')?.errors?.pattern
+                        * Please input more than 5 value.
+                    </div>
+                    <div *ngIf="userInfoForm.get('inputUserName')?.errors?.pattern
                         && userInfoForm.get('inputUserName')?.dirty" class="error">
-                            * Please input only numbers and letters.
-                        </div>
+                        * Please input only numbers and letters.
+                    </div>
                 </div>
 
                 <div class="clearfix"></div>
@@ -54,25 +53,25 @@
                     <label for="inputEmail">Email</label>
                     <input type="text" class="form-control" id="inputEmail" formControlName="inputEmail"
                         placeholder="Email">
-                        <div *ngIf="userInfoForm.get('inputEmail')?.errors?.pattern
+                    <div *ngIf="userInfoForm.get('inputEmail')?.errors?.pattern
                         && userInfoForm.get('inputEmail')?.dirty" class="error">
-                            * Please input a valid email. 
-                        </div>
-        
+                        * Please input a valid email.
+                    </div>
+
                 </div>
                 <div class="clearfix"></div>
                 <div class="col-md-12">
                     <label for="inputPassword">Password</label>
                     <input type="password" class="form-control" id="inputPassword" formControlName="inputPassword"
                         placeholder="Password">
-                        <div *ngIf="userInfoForm.get('inputPassword')?.errors?.minlength
+                    <div *ngIf="userInfoForm.get('inputPassword')?.errors?.minlength
                 && userInfoForm.get('inputPassword')?.dirty" class="error">
-                    * Please input a valid password. Must at least have eight characters 
-                </div>
-                <div *ngIf="userInfoForm.get('inputPassword')?.hasError('pattern')
+                        * Please input a valid password. Must at least have eight characters
+                    </div>
+                    <div *ngIf="userInfoForm.get('inputPassword')?.hasError('pattern')
                 && userInfoForm.get('inputPassword')?.dirty" class="error">
-                    * Please input a valid password. Must at least one letter, one digit and one special character 
-                </div>
+                        * Please input a valid password. Must at least one letter, one digit and one special character
+                    </div>
                 </div>
                 <div class="clearfix"></div>
                 <div class="col-md-3">
@@ -95,47 +94,48 @@
                     <label for="inputMobile">Mobile No</label>
                     <input type="string" class="form-control" id="inputMobile" formControlName="inputMobile"
                         placeholder="(09)XX XXX XXXX">
-                <div *ngIf="userInfoForm.get('inputMobile')?.errors?.pattern
+                    <div *ngIf="userInfoForm.get('inputMobile')?.errors?.pattern
                 && userInfoForm.get('inputMobile')?.dirty" class="error">
-                    * Please input a valid password. Must at least have eight characters 
-                </div>
-                        
+                        * Please input a valid password. Must at least have eight characters
+                    </div>
+
                 </div>
                 <div class="clearfix"></div>
                 <div class="col-md-4">
                     <label for="inputMonth">Month</label>
-                    <select id="inputMonth" formControlName="inputMonth" class="form-control" >
-                        <option selected>JAN</option>
-                        <option>FEB</option>
-                        <option>MAR</option>
-                        <option>APR</option>
-                        <option>MAY</option>
-                        <option>JUN</option>
-                        <option>JUL</option>
-                        <option>AUG</option>
-                        <option>SEP</option>
-                        <option>OCT</option>
-                        <option>NOV</option>
-                        <option>DEC</option>
+                    <select id="inputMonth" formControlName="inputMonth" class="form-control">
+                        <option *ngFor="let day of opts">{{day.key}}</option>
                     </select>
                 </div>
                 <div class="col-md-4">
                     <label for="inputDay">Day</label>
                     <select id="inputDay" formControlName="inputDay" class="form-control">
-                        <option *ngFor="let day of numberDays" 
-                        [value]="day">
-                      {{day}}
-                        </option>
+                        <ng-container *ngFor="let city of opts">
+                            <ng-container
+                                *ngIf="(city.key == this.userInfoForm.value.inputMonth) &&
+                             !(('FEB' == this.userInfoForm.value.inputMonth) && (this.userInfoForm.value.inputYear % 4 === 0))">
+                             <!-- ; else otherOption"> -->
+                                <option *ngFor="let dateValue of city.value">
+                                    {{dateValue}}
+                                </option>
+                            </ng-container>
+                        </ng-container>
+                        <!-- <ng-template #otherOption>
+                            <option  *ngFor="let dateValue of createArray(29)">
+                                {{dateValue}}
+                            </option>
+                        </ng-template> -->
+
                     </select>
                 </div>
                 <div class="col-md-4">
                     <label for="inputYear">Year</label>
-                        <input type="number" class="form-control" id="inputYear" formControlName="inputYear"
+                    <input type="number" class="form-control" id="inputYear" formControlName="inputYear"
                         placeholder="19XX">
-                        <div *ngIf="userInfoForm.get('inputYear')?.errors
+                    <div *ngIf="userInfoForm.get('inputYear')?.errors
                 && userInfoForm.get('inputYear')?.dirty" class="error">
-                    * Please input a year greater than 1920 
-                </div>
+                        * Please input a year greater than 1920
+                    </div>
                 </div>
 
                 <div class="clearfix"></div>
@@ -175,8 +175,8 @@
                 </div>
                 <div class="clearfix"></div>
                 <div class="form-check col-md-1">
-                    <button type="submit" class="btn btn-primary float-right" 
-                    [disabled]="!userInfoForm.valid" (click)="createUser()">
+                    <button type="submit" class="btn btn-primary float-right" [disabled]="!userInfoForm.valid"
+                        (click)="createUser()">
                         Confirm
                     </button>
                 </div>
